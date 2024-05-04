@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class MoveToNextScene : MonoBehaviour
 {
     public GameObject levelManager;
+    public GameObject virtualCamera;
+
+    public GameObject player;
 
     private void Start()
     {
@@ -14,15 +17,24 @@ public class MoveToNextScene : MonoBehaviour
 
     public void LoadNextScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        StartCoroutine(FadeOutToNextScene(SceneManager.GetActiveScene().buildIndex + 1));
     }
     public void ReloadScene()
     {
-        //levelManager.GetComponent<LevelManager>().updateLevel();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        StartCoroutine(FadeOutToNextScene(SceneManager.GetActiveScene().buildIndex));
     }
     public void GoToMainMenu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        StartCoroutine(FadeOutToNextScene(SceneManager.GetActiveScene().buildIndex - 1));
+    }
+
+    IEnumerator FadeOutToNextScene(int buildIndexNum)
+    {
+        Time.timeScale = 1f;
+        player.GetComponent<CapsuleCollider>().isTrigger = true;
+        virtualCamera.GetComponent<CameraFadeOut>().fadeOut = true;
+        Debug.Log("Fade out started!");
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene(buildIndexNum);
     }
 }

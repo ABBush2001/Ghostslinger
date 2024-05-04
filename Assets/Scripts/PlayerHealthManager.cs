@@ -15,6 +15,8 @@ public class PlayerHealthManager : MonoBehaviour
     public Slider healthBar;
     private int health;
 
+    private bool healthGone = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,15 +35,24 @@ public class PlayerHealthManager : MonoBehaviour
     void Update()
     {
         //game over
-        if(health <= 0)
+        if(health <= 0 && healthGone == false)
         {
-            Time.timeScale = 0;
-            health = 1;
-            GameUI.SetActive(false);
-            WinLossUI.SetActive(true);
-            winLossText.text = "You Lost!";
-            replayButtonText.text = "Try Again";
-            quitButtonText.text = "Return to Main Menu";
+            healthGone = true;
+            StartCoroutine(closing());
         }
+    }
+
+    IEnumerator closing()
+    {
+        Time.timeScale = 0.2f;
+        yield return new WaitForSeconds(1);
+        //display win screen
+        Time.timeScale = 0;
+        health = 1;
+        GameUI.SetActive(false);
+        WinLossUI.SetActive(true);
+        winLossText.text = "You Lost!";
+        replayButtonText.text = "Try Again";
+        quitButtonText.text = "Return to Main Menu";
     }
 }

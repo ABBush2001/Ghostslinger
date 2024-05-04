@@ -5,6 +5,7 @@ using UnityEngine;
 public class GhostCollision : MonoBehaviour
 {
     [SerializeField] private GameObject eventSystem;
+    [SerializeField] GameObject damagePanel;
 
     public void OnCollisionEnter(Collision collision)
     {
@@ -12,10 +13,12 @@ public class GhostCollision : MonoBehaviour
         {
             eventSystem.GetComponent<PlayerHealthManager>().damage();
             eventSystem.GetComponent<PlayerHealthManager>().damage();
+            StartCoroutine(damageDisplay());
         }
         else if(collision.gameObject.tag == "HatchetGhost")
         {
             eventSystem.GetComponent<PlayerHealthManager>().damage();
+            StartCoroutine(damageDisplay());
         }
         else if(collision.gameObject.tag == "DevilGhost")
         {
@@ -23,6 +26,14 @@ public class GhostCollision : MonoBehaviour
             eventSystem.GetComponent<PlayerHealthManager>().damage();
             eventSystem.GetComponent<PlayerHealthManager>().damage();
             eventSystem.GetComponent<PlayerHealthManager>().damage();
+            StartCoroutine(damageDisplay());
         }
+    }
+
+    IEnumerator damageDisplay()
+    {
+        damagePanel.SetActive(true);
+        yield return new WaitForSeconds(1);
+        damagePanel.SetActive(false);
     }
 }

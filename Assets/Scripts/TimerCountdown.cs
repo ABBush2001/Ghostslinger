@@ -37,29 +37,34 @@ public class TimerCountdown : MonoBehaviour
                 if (timeRemaining > endTime)
                 {
                     timeRemaining -= Time.deltaTime;
-                    timerText.text = ("Time Remaining: ") +
-                    Mathf.FloorToInt(timeRemaining + 1).ToString();
+                    timerText.text = Mathf.FloorToInt(timeRemaining + 1).ToString();
                 }
                 else
                 {
                     timerRunning = false;
                     timeRemaining = 0;
                     Debug.Log("Time Out");
-                    timerText.text = ("Time Remaining: ") +
-                    Mathf.FloorToInt(timeRemaining).ToString();
+                    timerText.text = Mathf.FloorToInt(timeRemaining).ToString();
 
                     //update level
                     levelManager.GetComponent<LevelManager>().updateLevel();
 
-                    //display win screen
-                    Time.timeScale = 0;
-                    GameUI.SetActive(false);
-                    WinLossUI.SetActive(true);
-                    WinLossText.text = "You Win!";
-                    ReplayButton.text = "Go To Next Level";
-                    QuitButton.text = "Return to Main Menu";
+                    StartCoroutine(closing());
                 }
             }
         }
     }
+
+    IEnumerator closing()
+    {
+        Time.timeScale = 0.2f;
+        yield return new WaitForSeconds(1);
+        //display win screen
+        Time.timeScale = 0;
+        GameUI.SetActive(false);
+        WinLossUI.SetActive(true);
+        WinLossText.text = "You Win!";
+        ReplayButton.text = "Go To Next Level";
+        QuitButton.text = "Return to Main Menu";
+    }    
 }
