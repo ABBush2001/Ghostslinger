@@ -11,6 +11,9 @@ public class TimerCountdown : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ReplayButton;
     [SerializeField] private TextMeshProUGUI QuitButton;
 
+    [SerializeField] AudioSource mainMusic;
+    [SerializeField] AudioSource victoryMusic;
+
     [SerializeField] private GameObject eventSystem;
 
     public float timeRemaining = 10f;
@@ -58,6 +61,8 @@ public class TimerCountdown : MonoBehaviour
     IEnumerator closing()
     {
         Time.timeScale = 0.2f;
+        mainMusic.Stop();
+        victoryMusic.Play();
         yield return new WaitForSeconds(1);
         //display win screen
         Time.timeScale = 0;

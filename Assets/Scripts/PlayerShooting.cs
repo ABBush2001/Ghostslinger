@@ -7,12 +7,14 @@ public class PlayerShooting : MonoBehaviour
     public GameObject bullet;
     public GameObject bulletHolder;
     [SerializeField] Animator playerAnim;
+    [SerializeField] AudioSource gunShotSound;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0) && playerAnim.GetBool("HasWeapon"))
         {
             playerAnim.SetTrigger("Fired");
+            gunShotSound.Play();
             Shoot();
         }    
     }

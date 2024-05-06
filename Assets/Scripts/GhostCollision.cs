@@ -6,22 +6,26 @@ public class GhostCollision : MonoBehaviour
 {
     [SerializeField] private GameObject eventSystem;
     [SerializeField] GameObject damagePanel;
+    [SerializeField] AudioSource playerDamageSound;
 
     public void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Ghost")
         {
+            playerDamageSound.Play();
             eventSystem.GetComponent<PlayerHealthManager>().damage();
             eventSystem.GetComponent<PlayerHealthManager>().damage();
             StartCoroutine(damageDisplay());
         }
         else if(collision.gameObject.tag == "HatchetGhost")
         {
+            playerDamageSound.Play();
             eventSystem.GetComponent<PlayerHealthManager>().damage();
             StartCoroutine(damageDisplay());
         }
         else if(collision.gameObject.tag == "DevilGhost")
         {
+            playerDamageSound.Play();
             eventSystem.GetComponent<PlayerHealthManager>().damage();
             eventSystem.GetComponent<PlayerHealthManager>().damage();
             eventSystem.GetComponent<PlayerHealthManager>().damage();

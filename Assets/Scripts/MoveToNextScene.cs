@@ -7,8 +7,11 @@ public class MoveToNextScene : MonoBehaviour
 {
     public GameObject levelManager;
     public GameObject virtualCamera;
+    public GameObject mainCamera;
 
     public GameObject player;
+
+    [SerializeField] AudioSource buttonSound;
 
     private void Start()
     {
@@ -30,11 +33,22 @@ public class MoveToNextScene : MonoBehaviour
 
     IEnumerator FadeOutToNextScene(int buildIndexNum)
     {
-        Time.timeScale = 1f;
-        player.GetComponent<CapsuleCollider>().isTrigger = true;
-        virtualCamera.GetComponent<CameraFadeOut>().fadeOut = true;
-        Debug.Log("Fade out started!");
-        yield return new WaitForSeconds(3);
-        SceneManager.LoadScene(buildIndexNum);
+        buttonSound.Play();
+
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            Time.timeScale = 1f;
+            player.GetComponent<CapsuleCollider>().isTrigger = true;
+            virtualCamera.GetComponent<CameraFadeOut>().fadeOut = true;
+            Debug.Log("Fade out started!");
+            yield return new WaitForSeconds(3);
+            SceneManager.LoadScene(buildIndexNum);
+        }
+        else
+        {
+            mainCamera.GetComponent<CameraFadeOut>().fadeOut = true;
+            yield return new WaitForSeconds(5);
+            SceneManager.LoadScene(buildIndexNum);
+        }
     }
 }

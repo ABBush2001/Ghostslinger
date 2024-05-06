@@ -37,7 +37,7 @@ public class GhostSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.RandomRange(5, 10));
+            yield return new WaitForSeconds(Random.RandomRange(1, 3));
 
             if (ghostCounter < 20)
             {

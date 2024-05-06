@@ -12,6 +12,9 @@ public class PlayerHealthManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI replayButtonText;
     [SerializeField] private TextMeshProUGUI quitButtonText;
 
+    [SerializeField] AudioSource mainMusic;
+    [SerializeField] AudioSource lossMusic;
+
     public Slider healthBar;
     private int health;
 
@@ -45,6 +48,8 @@ public class PlayerHealthManager : MonoBehaviour
     IEnumerator closing()
     {
         Time.timeScale = 0.2f;
+        mainMusic.Stop();
+        lossMusic.Play();
         yield return new WaitForSeconds(1);
         //display win screen
         Time.timeScale = 0;

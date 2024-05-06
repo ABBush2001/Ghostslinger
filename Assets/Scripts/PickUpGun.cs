@@ -7,6 +7,7 @@ public class PickUpGun : MonoBehaviour
     [SerializeField] Animator playerAnim;
     [SerializeField] GameObject gun;
     [SerializeField] GameObject playerHand;
+    [SerializeField] AudioSource gunPickupSound;
 
     public GameObject eventSystem;
 
@@ -14,6 +15,7 @@ public class PickUpGun : MonoBehaviour
     {
         if(other.tag == "Player" && eventSystem.GetComponent<LevelOpening>().getAnimFinished())
         {
+            gunPickupSound.Play();
             playerAnim.SetBool("HasWeapon", true);
 
             //place weapon into player's hand
