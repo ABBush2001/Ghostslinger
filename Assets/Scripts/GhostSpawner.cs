@@ -41,7 +41,6 @@ public class GhostSpawner : MonoBehaviour
 
             if (ghostCounter < 20)
             {
-                ghostCounter++;
 
                 //randomly generate ghost types based on level
                 int randGhost;
@@ -63,18 +62,18 @@ public class GhostSpawner : MonoBehaviour
 
                 if (randGhost == 1)
                 {
-                    g = Instantiate(ghost, this.transform);
+                    g = Instantiate(ghost, this.transform.parent);
                 }
                 else if(randGhost == 2)
                 {
-                    g = Instantiate(hatchetGhost, this.transform);
+                    g = Instantiate(hatchetGhost, this.transform.parent);
                 }
                 else if(randGhost == 3)
                 {
-                    g = Instantiate(devilGhost, this.transform);
+                    g = Instantiate(devilGhost, this.transform.parent);
                 }
 
-                g.transform.SetLocalPositionAndRotation(new Vector3(0 + Random.RandomRange(-10, 10), 0, 0 + Random.RandomRange(-10, 10)), new Quaternion());
+                g.transform.SetLocalPositionAndRotation(new Vector3(this.transform.position.x + Random.RandomRange(-5, 5), 0, this.transform.position.z + Random.RandomRange(-5, 5)), new Quaternion());
             }
         }
     }
